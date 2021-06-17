@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Basic map</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="css/leaflet.css">
+    <script src="js/leaflet.js"></script>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+        html, body, #map {
+            height: 100%;
+            width: 100%;
+        }
+        .legend {
+            width: 250px;
+            font-size: 16px;
+            color: #333333;
+            font-family: "Open Sans", Helvetica, sans-serif;
+            padding: 10px 14px;
+            background-color: rgba(245,245,220,0.8) ;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            border-radius: 5px;
+            border: 1px solid grey;
+        }
+        .legend img {
+            width: 200px;
+            margin: auto;
+            display: block;
+
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script>
+
+
+window.document.title = 'Ruta Donosti';
+
+// Create variable to hold map element, give initial settings to map
+let map = L.map("map", {center: [43.322563, -1.989186], zoom: 16});
+
+// Add OpenStreetMap tile layer to map element
+L.tileLayer(
+    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", 
+    {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}
+).addTo(map);
+
+// Add point Alderdi Eder
+let pnt1 = L.marker([43.321175, -1.985691]).addTo(map);
+
+// Add point Puerto
+let pnt2 = L.marker([43.323650, -1.988058]).addTo(map);
+
+// Add point Aquarium
+let pnt3 = L.marker([43.322787, -1.991796]).addTo(map);
+
+// Add point Urgull
+let pnt4 = L.marker([43.325036, -1.988960]).addTo(map);
+
+// Add line
+let line = L.polyline(
+    [[43.321175, -1.985691],[43.321551, -1.986467], [43.323650, -1.988058],[43.323071, -1.989668],[43.322787, -1.991796],[43.323231, -1.992506],[43.323358, -1.992139],[43.324145, -1.990904],[43.324309, -1.989904],[43.325036, -1.988960]], 
+    {color: "red", weight: 10}
+).addTo(map);
+
+// Add popup Alderdi Eder
+pnt1.bindPopup(
+    "Jardines de Alderdi Eder");
+
+// Add popup El Puerto
+pnt2.bindPopup(
+    "El Puerto"
+);
+
+// Add popup El Aquarium
+pnt3.bindPopup(
+    "El Aquarium"
+);
+
+// Add popup Monte Urgull
+pnt4.bindPopup(
+    "Monte Urgull"
+);
+
+// Create Leaflet Control Object for Legend
+let legend = L.control({position: "bottomleft"});
+
+// Function that runs when legend is added to map
+legend.onAdd = function() {
+
+    // Create Div Element and Populate it with HTML
+    let div = L.DomUtil.create("div", "legend");
+    div.innerHTML = 
+        '<p><b>Ruta de la Concha a Urgull</b></p><hr>' +
+        '<p>Ruta para realizar desde los jardines de Alderdi Eder hasta el monte Urgull, visitando el puerto y el Aquarium.</p>' +
+        'Paradas:<br>' +
+        '<p><ul>' +
+        '<li>Jardines de Alderdi Eder</li>' +
+        '<li>El Puerto</li>' +
+        '<li>El Aquarium</li>' +
+        '<li>Monte Urgull</li>' +
+        '</ul></p>' +
+        'Cada parada tiene un <b>popup</b> indicando el nombre del lugar. Para más información consultar en la <a href="https://www.sansebastianturismoa.eus/" target="_blank">oficina de turismo</a>' +'.'+
+        '<img src="images/donostia.png">';
+
+    // Return the Legend div containing the HTML content
+    return div;
+
+};
+
+// Add Legend to Map
+legend.addTo(map);
+
+    </script>
+</body>
+</html>
